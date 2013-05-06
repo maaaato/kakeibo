@@ -1,1 +1,1 @@
-web: python snowflake/manage.py runserver "0.0.0.0:$PORT" 
+web: newrelic-admin python snowflake/manage.py runserver "0.0.0.0:$PORT" 
