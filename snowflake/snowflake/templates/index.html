@@ -1,0 +1,20 @@
+<p>ようこそ{{member.username}}</p>
+
+{% for val in receipt %}
+    {{val.category}}
+    {{val.name}}
+    {{val.price}}
+{% endfor %}
+
+<form action={% url "receipt_regist" %} method="post">{% csrf_token %}
+    <label>カテゴリー</label>
+    <input type="text" name="category" />
+    <label>名前</label>
+    <input type="text" name="name" />
+    <label>金額</label>
+    <input type="text" name="price" />
+    <input type="submit" value="登録" />
+</form>
+
+
+
