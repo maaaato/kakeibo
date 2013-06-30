@@ -1,14 +1,19 @@
 <p>ようこそ{{member.username}}</p>
 
+<p>今日のレシート</p>
 {% for val in receipt %}
     {{val.category}}
     {{val.name}}
     {{val.price}}
 {% endfor %}
 
+
 <form action={% url "receipt_regist" %} method="post">{% csrf_token %}
-    <label>カテゴリー</label>
-    <input type="text" name="category" />
+    <select name="category">
+      {% for val in category %}
+          <option value="{{val.pk}}">{{val}}</option>
+      {% endfor %}
+    </select>
     <label>名前</label>
     <input type="text" name="name" />
     <label>金額</label>

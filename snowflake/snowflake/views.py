@@ -7,6 +7,7 @@ from session.utile.base_utile import Session
 from users.models import Users
 from receipt.models import Receipt
 from snowflake.decorate import login_required
+from category.models import Category
 
 
 @login_required
@@ -15,9 +16,11 @@ def index(request):
     user = request.user
 
     receipt = Receipt.get_by_today(user.pk)
+    category = Category.objects.all()
     rctxt = RequestContext(request, {
         "member": user,
-        "receipt": receipt
+        "receipt": receipt,
+        "category": category,
     })
     
     return render_to_response(
@@ -30,7 +33,8 @@ def login(request):
     user = None
     if request.method == "POST":
         if request.POST["username"] and request.POST["password"]:
-            user = Users.get_user(request.POST["username"], request.POST["password"])
+            user = Users.get_user(request.POST["username"],\
+                                  request.POST["password"])
             if user:
                 Session.set_user_id(request, user)
                 return HttpResponseRedirect(reverse('index'))
@@ -40,22 +44,3 @@ def login(request):
             context_instance=RequestContext(request))
 
     return HttpResponseRedirect(reverse('login'))
-
-
-@login_required
-def receipt_regist(request):
-    """レシートの登録"""
-    
-    user = request.user
-    category = int(request.POST["category"])
-    name = request.POST["name"]
-    price = int(request.POST["price"])
-
-    r = Receipt.register(category, user.pk, name, price)
-
-    return HttpResponseRedirect(reverse('index'))
-    
-    
-
-
-    

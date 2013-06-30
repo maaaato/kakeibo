@@ -21,5 +21,9 @@ urlpatterns += patterns(
     'snowflake.views',
     url(r'^$', 'index', name="index"),
     url(r'^login/', 'login', name="login"),
+)
+
+urlpatterns += patterns(
+    'receipt.views',
     url(r'^receipt_regist/', 'receipt_regist', name="receipt_regist"),
 )
